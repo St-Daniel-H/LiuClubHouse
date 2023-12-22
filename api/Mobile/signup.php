@@ -10,7 +10,7 @@ $email = "";
 $password = "";
 $confirm = "";
 $name = "";
-$picture = "/Uploads/default.jpg";
+$picture = "/Uploads/UserProfiles/default.jpg";
 if ($data !== null) {
     $email = addslashes(strip_tags($data['Email']));
     $password = addslashes(strip_tags($data['Password']));
