@@ -1,0 +1,1 @@
+These APIs are only accessible by the Club Manager!
