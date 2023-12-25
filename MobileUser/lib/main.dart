@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
-
+const baseURL = 'liuclubhouse.000webhostapp.com';
 void main() {
+
   runApp(const MyApp());
 }
 
@@ -46,59 +47,79 @@ class LoginPage extends StatelessWidget {
         title: const Text('Login'),
         centerTitle: true,
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20.0),
-        child: Card(
-          elevation: 5,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(20.0),
+              child: Card(
+                elevation: 5,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      TextFormField(
+                        decoration: const InputDecoration(
+                          labelText: 'Name',
+                          border: OutlineInputBorder(),
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      TextFormField(
+                        keyboardType: TextInputType.emailAddress,
+                        decoration: const InputDecoration(
+                          labelText: 'Email',
+                          border: OutlineInputBorder(),
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      TextFormField(
+                        obscureText: true,
+                        decoration: const InputDecoration(
+                          labelText: 'Password',
+                          border: OutlineInputBorder(),
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                    ],
+                  ),
+                ),
+              ),
+            ),
           ),
-          child: Padding(
+          Padding(
             padding: const EdgeInsets.all(20.0),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                TextFormField(
-                  decoration: const InputDecoration(
-                    labelText: 'Name',
-                    border: OutlineInputBorder(),
-                  ),
-                ),
-                const SizedBox(height: 20),
-                TextFormField(
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: const InputDecoration(
-                    labelText: 'Email',
-                    border: OutlineInputBorder(),
-                  ),
-                ),
-                const SizedBox(height: 20),
-                TextFormField(
-                  obscureText: true,
-                  decoration: const InputDecoration(
-                    labelText: 'Password',
-                    border: OutlineInputBorder(),
-                  ),
-                ),
-                const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, '/signup');
+
                   },
-                  child: const Text('Sign Up'),
+                  child: const Text('Sign In'),
                 ),
                 const SizedBox(height: 10),
                 ElevatedButton(
                   onPressed: () {
-                    // Implement Sign In logic here
+                    Navigator.pushNamed(context, '/signup');
                   },
-                  child: const Text('Sign In'),
+                  style: ButtonStyle(
+                    minimumSize: MaterialStateProperty.all(const Size(150, 50)),
+                    padding: MaterialStateProperty.all(const EdgeInsets.all(15)),
+                  ),
+                  child: const Text('Sign Up'),
                 ),
               ],
             ),
           ),
-        ),
+        ],
       ),
     );
   }
@@ -175,7 +196,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       border: OutlineInputBorder(),
                     ),
                   ),
-                  const SizedBox(height: 20,width: 200),
+                  const SizedBox(height: 20),
                   TextFormField(
                     validator: (value) =>
                     (value == null || value.isEmpty) ? 'Please fill Password' : null,
@@ -186,34 +207,56 @@ class _SignUpPageState extends State<SignUpPage> {
                       border: OutlineInputBorder(),
                     ),
                   ),
-                  const SizedBox(height: 20,width: 200),
-                  ElevatedButton(
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        setState(() {
-                          _loading = true;
-                        });
-                        // Implement saving user logic here (same as previous code)
-                        // saveUser(
-                        //   update,
-                        //   _controllerName.text,
-                        //   _controllerEmail.text,
-                        //   _controllerPass.text,
-                        // );
-                      }
-                    },
-                    child: _loading
-                        ? const CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                    )
-                        : const Text('Sign Up'),
-                  ),
                 ],
               ),
             ),
           ),
         ),
       ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: ElevatedButton(
+          onPressed: () {
+            if (_formKey.currentState!.validate()) {
+              setState(() {
+                _loading = true;
+              });
+              saveUser(
+                update,
+                _controllerName.text,
+                _controllerEmail.text,
+                _controllerPass.text,
+              );
+            }
+          },
+          child: _loading
+              ? const CircularProgressIndicator(
+            valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+          )
+              : const Text('Sign Up'),
+        ),
+      ),
     );
+  }
+}
+void saveUser(Function(String) update, String name, String email, String password) async {
+  try {
+    final url = Uri.https(baseURL, 'signup.php');
+    final response = await http
+        .post(url,
+        headers: <String, String>{
+          'content-type': 'application/json; charset=UTF-8'
+        },
+        body: convert.jsonEncode(<String, String>{
+          'name': name,
+          'email': email,
+          'key': 'your_key'
+        }))
+        .timeout(const Duration(seconds: 5));
+    if (response.statusCode == 200) {
+      update(response.body);
+    }
+  } catch (e) {
+    update(e.toString());
   }
 }
