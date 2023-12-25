@@ -194,12 +194,12 @@ class _SignUpPageState extends State<SignUpPage> {
                           _loading = true;
                         });
                         // Implement saving user logic here (same as previous code)
-                        // saveUser(
-                        //   update,
-                        //   _controllerName.text,
-                        //   _controllerEmail.text,
-                        //   _controllerPass.text,
-                        // );
+                        saveUser(
+                          update,
+                          _controllerName.text,
+                          _controllerEmail.text,
+                          _controllerPass.text,
+                        );
                       }
                     },
                     child: _loading
