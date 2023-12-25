@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
+import 'package:shared_preferences/shared_preferences.dart';
+
 const baseURL = 'liuclubhouse.000webhostapp.com';
 void main() {
 
@@ -288,6 +290,8 @@ void saveUser(Function(String) update, String name, String email, String passwor
   }
 }
 void LoginUser(Function(String) update,String email, String password) async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+
   try {
     final url = Uri.https(baseURL, '/api/Mobile/login.php');
     final response = await http
@@ -303,6 +307,13 @@ void LoginUser(Function(String) update,String email, String password) async {
         .timeout(const Duration(seconds: 20));
     if (response.statusCode == 200) {
       update(response.body);
+      Map<String, dynamic> responseData = convert.jsonDecode(response.body);
+
+      // Access the userId property
+      String userId = responseData['userId'].toString(); // Convert to String if needed
+
+      // Save userId to SharedPreferences
+      await prefs.setString('userId', userId);
     }
   } catch (e) {
     update(e.toString());
