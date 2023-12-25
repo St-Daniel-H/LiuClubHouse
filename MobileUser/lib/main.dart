@@ -108,7 +108,7 @@ class LoginPage extends StatelessWidget {
                 const SizedBox(height: 10),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, '/signup');
+                    Navigator.pushNamed(context, 'signup');
                   },
                   style: ButtonStyle(
                     minimumSize: MaterialStateProperty.all(const Size(150, 50)),
@@ -241,18 +241,20 @@ class _SignUpPageState extends State<SignUpPage> {
 }
 void saveUser(Function(String) update, String name, String email, String password) async {
   try {
-    final url = Uri.https(baseURL, 'signup.php');
+    final url = Uri.https(baseURL, '/api/Mobile/signup.php');
     final response = await http
         .post(url,
         headers: <String, String>{
           'content-type': 'application/json; charset=UTF-8'
         },
         body: convert.jsonEncode(<String, String>{
-          'name': name,
-          'email': email,
+          'Name': name,
+          'Email': email,
+          'Password':password,
+          'Confirm':password,
           'key': 'your_key'
         }))
-        .timeout(const Duration(seconds: 5));
+        .timeout(const Duration(seconds: 20));
     if (response.statusCode == 200) {
       update(response.body);
     }
