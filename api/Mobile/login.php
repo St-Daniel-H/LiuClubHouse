@@ -35,7 +35,8 @@ if (mysqli_num_rows($result) == 0) {
     if ($finalPassword == $row["Password"]) {
         // log in as : Public Users
         $response = array(
-            'response' => "Ok"
+            'response' => "Ok",
+            'userID' => $row['ID']
         );
         $jsonData = json_encode($response);
         echo $jsonData;

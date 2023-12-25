@@ -1,4 +1,3 @@
-<!--User signup api, basically create user account-->
 <?php
 require_once("../../Config.php");
 // Retrieve the raw POST data
@@ -32,6 +31,13 @@ if (mysqli_num_rows($result) > 0) {
     $jsonData = json_encode($response);
     echo $jsonData;
 } else {
+    if ($email == "" || $password == "" || $name == "") {
+        $response = array(
+            'response' => "Fill All Inputs"
+        );
+        $jsonData = json_encode($response);
+        echo $jsonData;
+    }
     if ($password != $confirm) {
         // password doesn't match
         $response = array(
