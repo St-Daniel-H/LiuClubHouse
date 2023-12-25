@@ -2,7 +2,7 @@ import 'dart:convert' as convert;
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-
+import '../ClubProfile/ClubProfile.dart';
 const String _baseURL = 'liuclubhouse.000webhostapp.com';
 
 class Club {
@@ -65,13 +65,18 @@ class _ClubCardState extends State<ClubCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: double.infinity,
+      
+      constraints: BoxConstraints(
+        maxWidth: 500, // Set the maximum width
+      ),
       padding: EdgeInsets.all(16.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10.0),
-        border: Border.all(color: Colors.grey[300]!),
+        border: Border.all(color: Colors.black12),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
+            color: Colors.white.withOpacity(0.5),
             spreadRadius: 2,
             blurRadius: 5,
             offset: Offset(0, 3),
@@ -79,13 +84,13 @@ class _ClubCardState extends State<ClubCard> {
         ],
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(8.0),
             child: Image.network(
               "https://liuclubhouse.000webhostapp.com/${widget.p.Logo}",
-              width: 100,
+              width: double.infinity,
               height: 100,
               fit: BoxFit.cover,
             ),
@@ -107,6 +112,17 @@ class _ClubCardState extends State<ClubCard> {
             ),
             textAlign: TextAlign.center,
           ),
+          SizedBox(height: 20.0,),
+          ElevatedButton(onPressed: (){
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ClubProfile(clubID: widget.p.ID)),
+            );
+          }, child: Text("Visit"),style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+            // You can customize other properties here
+            // For example, textStyle, elevation, padding, shape, etc.
+          ),)
         ],
       ),
     );
@@ -127,7 +143,6 @@ class ShowClubs extends StatelessWidget {
           Container(
             child: ClubCard(p: _clubs[index]),
           ),
-          Text(_clubs.length.toString())
         ],
       ),
     );

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:liu_club_house/ClubCard.dart';
+import 'package:liu_club_house/Home/ClubCard.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Home extends StatefulWidget {
