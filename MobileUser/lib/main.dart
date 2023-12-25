@@ -207,32 +207,33 @@ class _SignUpPageState extends State<SignUpPage> {
                       border: OutlineInputBorder(),
                     ),
                   ),
-                  const SizedBox(height: 20,width: 200),
-                  ElevatedButton(
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        setState(() {
-                          _loading = true;
-                        });
-                        // Implement saving user logic here (same as previous code)
-                        // saveUser(
-                        //   update,
-                        //   _controllerName.text,
-                        //   _controllerEmail.text,
-                        //   _controllerPass.text,
-                        // );
-                      }
-                    },
-                    child: _loading
-                        ? const CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                    )
-                        : const Text('Sign Up'),
-                  ),
                 ],
               ),
             ),
           ),
+        ),
+      ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: ElevatedButton(
+          onPressed: () {
+            if (_formKey.currentState!.validate()) {
+              setState(() {
+                _loading = true;
+              });
+              saveUser(
+                update,
+                _controllerName.text,
+                _controllerEmail.text,
+                _controllerPass.text,
+              );
+            }
+          },
+          child: _loading
+              ? const CircularProgressIndicator(
+            valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+          )
+              : const Text('Sign Up'),
         ),
       ),
     );
