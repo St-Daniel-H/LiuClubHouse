@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'Home/Home.dart';
 const baseURL = 'liuclubhouse.000webhostapp.com';
 void main() {
 
@@ -34,6 +34,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => const LoginPage(),
         '/signup': (context) => const SignUpPage(),
+        '/home': (context) => const Home(),
       },
     );
   }
@@ -50,12 +51,20 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _controllerEmail = TextEditingController();
   final TextEditingController _controllerPass = TextEditingController();
   bool _loading = false;
+  bool loggedIn = false;
+  void updateLoggedIn(){
+      loggedIn= true;
 
+  }
   void update(String text) {
     setState(() {
       _loading = false;
     });
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(text)));
+    if(loggedIn){
+
+      Navigator.pushNamed(context, '/home');
+    }
   }
   @override
   void dispose() {
@@ -127,14 +136,13 @@ class _LoginPageState extends State<LoginPage> {
                   ElevatedButton(
                     onPressed: () {
                     LoginUser(update,_controllerEmail.text,
-                      _controllerPass.text);
+                      _controllerPass.text,updateLoggedIn);
                     },
                     child: const Text('Sign In'),
                   ),
                   const SizedBox(height: 10),
                   ElevatedButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, 'signup');
                     },
                     style: ButtonStyle(
                       minimumSize: MaterialStateProperty.all(const Size(150, 50)),
@@ -289,7 +297,7 @@ void saveUser(Function(String) update, String name, String email, String passwor
     update(e.toString());
   }
 }
-void LoginUser(Function(String) update,String email, String password) async {
+void LoginUser(Function(String) update,String email, String password,Function() updateLoggedIn) async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
 
   try {
@@ -306,14 +314,13 @@ void LoginUser(Function(String) update,String email, String password) async {
         }))
         .timeout(const Duration(seconds: 20));
     if (response.statusCode == 200) {
-      update(response.body);
+
       Map<String, dynamic> responseData = convert.jsonDecode(response.body);
+      String userId = responseData['userID'].toString();
+       prefs.setString('userId', userId);
 
-      // Access the userId property
-      String userId = responseData['userId'].toString(); // Convert to String if needed
-
-      // Save userId to SharedPreferences
-      await prefs.setString('userId', userId);
+      updateLoggedIn();
+      update(response.body);
     }
   } catch (e) {
     update(e.toString());
