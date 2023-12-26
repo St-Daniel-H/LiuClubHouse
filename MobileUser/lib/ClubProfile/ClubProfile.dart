@@ -87,9 +87,7 @@ class _ClubProfileState extends State<ClubProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(Name),
-      ),
+
       body: Column(
         children: [
           Expanded(

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import '../ClubProfile/ClubProfile.dart';
+import '../ClubProfile/ClubProfileHome.dart';
 const String _baseURL = 'liuclubhouse.000webhostapp.com';
 
 class Club {
@@ -66,9 +67,9 @@ class _ClubCardState extends State<ClubCard> {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      
+
       constraints: BoxConstraints(
-        maxWidth: 500, // Set the maximum width
+        maxWidth: 700, // Set the maximum width
       ),
       padding: EdgeInsets.all(16.0),
       decoration: BoxDecoration(
@@ -116,12 +117,11 @@ class _ClubCardState extends State<ClubCard> {
           ElevatedButton(onPressed: (){
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => ClubProfile(clubID: widget.p.ID)),
+              MaterialPageRoute(builder: (context) => ClubProfileHome(clubId: widget.p.ID)),
             );
           }, child: Text("Visit"),style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
-            // You can customize other properties here
-            // For example, textStyle, elevation, padding, shape, etc.
+
           ),)
         ],
       ),
@@ -134,18 +134,18 @@ class ShowClubs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
     return ListView.builder(
+      physics: ClampingScrollPhysics(),
+      shrinkWrap: true,
       itemCount: _clubs.length,
-      itemBuilder: (context, index) => Column(
-        children: [
-          SizedBox(height: 10),
-          Container(
-            child: ClubCard(p: _clubs[index]),
-          ),
-        ],
+      itemBuilder: (context, index) => Padding(
+        padding: const EdgeInsets.symmetric(vertical: 10),
+        child: SizedBox(
+          height: 400,
+          child: ClubCard(p: _clubs[index]),
+        ),
       ),
     );
-
   }
 }
+
