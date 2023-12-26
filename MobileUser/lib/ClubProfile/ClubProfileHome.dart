@@ -30,7 +30,7 @@ class ClubProfileHome extends StatelessWidget {
           body: TabBarView(
             children: [
               ClubProfile(clubID:clubId),
-              const ClubEvents(),
+               ClubEvents(clubId: clubId.toString()),
               const ClubMembers(),
             ],
           ),
