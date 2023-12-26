@@ -18,22 +18,26 @@ class _HomeState extends State<Home> {
     super.initState();
     loadUserId();
   }
+
   bool _load = false; // used to show products list or progress bar
 
   void update(bool success) {
     setState(() {
       _load = true; // show product list
-      if (!success) { // API request failed
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('failed to load data')));
+      if (!success) {
+        // API request failed
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text('failed to load data')));
       }
     });
   }
+
   Future<void> loadUserId() async {
     prefs = await SharedPreferences.getInstance();
-    userId =await prefs.getString('userId');
-      if(userId!=null) {
-        updateClubs(update, userId!);
-      }
+    userId = await prefs.getString('userId');
+    if (userId != null) {
+      updateClubs(update, userId!);
+    }
   }
 
   @override
@@ -42,9 +46,40 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         title: Text("Liu Club House"),
       ),
-      body: _load ? const ShowClubs() : const Center(
-    child: SizedBox(width: 100, height: 100, child: CircularProgressIndicator())
-    ),
+      body: Column(
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Center(
+                  child: Column(
+                    children: [
+                      _load
+                          ? Container(
+                        constraints: BoxConstraints(
+                          maxWidth: 700,
+                        ),
+                        child:Column(
+                          children: [ShowClubs()],
+                        ) ,
+                      )
+                          : const Center(
+                        child: SizedBox(
+                          width: 100,
+                          height: 100,
+                          child: CircularProgressIndicator(),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+
     );
   }
 }
