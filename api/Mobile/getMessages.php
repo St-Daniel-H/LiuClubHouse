@@ -14,7 +14,7 @@ if ($data !== null) {
         die("access denied");
     }
 }
-$query = "SELECT Messages.Content, Messages.Date, Users.Name,Users.ID
+$query = "SELECT Messages.Content, Messages.Date, Users.Name,Users.ID,Users.Picture
           FROM Messages 
           INNER JOIN Users on Messages.SenderId = Users.ID
           WHERE Messages.ClubID = '" . $clubId . "'";
