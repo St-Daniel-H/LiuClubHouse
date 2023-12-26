@@ -88,51 +88,6 @@ class _LoginCardState extends State<LoginCard> {
         ),
       ),
     );
-    // return Scaffold(
-    // body: Center(
-    //   child: Card(
-    //     margin: const EdgeInsets.all(20.0),
-    //     child: Padding(
-    //       padding: const EdgeInsets.all(16.0),
-    //       child: Column(
-    //         crossAxisAlignment: CrossAxisAlignment.stretch,
-    //         children: [
-    //           const SizedBox(height: 20),
-    //           TextFormField(
-    //             validator: (value) =>
-    //             (value == null || value.isEmpty) ? 'Please fill Email' : null,
-    //             controller: _controllerEmail,
-    //             keyboardType: TextInputType.emailAddress,
-    //             decoration: const InputDecoration(
-    //               labelText: 'Email',
-    //               border: OutlineInputBorder(),
-    //             ),
-    //           ),
-    //           const SizedBox(height: 20),
-    //           TextFormField(
-    //             validator: (value) =>
-    //             (value == null || value.isEmpty) ? 'Please fill Password' : null,
-    //             controller: _controllerPass,
-    //             obscureText: true,
-    //             decoration: const InputDecoration(
-    //               labelText: 'Password',
-    //               border: OutlineInputBorder(),
-    //             ),
-    //           ),
-    //           const SizedBox(height: 20),
-    //           ElevatedButton(
-    //             onPressed: () {
-    //               LoginUser(update,_controllerEmail.text,
-    //                   _controllerPass.text,updateLoggedIn);
-    //             },
-    //             child: const Text('Sign In'),
-    //           ),
-    //         ],
-    //       ),
-    //     ),
-    //   ),
-    // ),
-    // );
   }
 }
 void LoginUser(Function(String) update,String email, String password,Function() updateLoggedIn) async {

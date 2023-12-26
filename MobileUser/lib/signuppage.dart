@@ -35,29 +35,33 @@ class _SignUpCardState extends State<SignUpCard> {
   Widget build(BuildContext context) {
     return Center(
       child: Card(
-        margin: const EdgeInsets.all(20.0),
+        margin: EdgeInsets.all(20.0),
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: EdgeInsets.all(16.0),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              TextField(
-                decoration: const InputDecoration(labelText: 'Full Name'),
-              ),
-              SizedBox(height: 10),
-              TextField(
-                decoration: const InputDecoration(labelText: 'Email'),
-              ),
-              SizedBox(height: 10),
-              TextField(
-                decoration: const InputDecoration(labelText: 'Password'),
-                obscureText: true,
-              ),
-              SizedBox(height: 10),
-              TextField(
+              const SizedBox(height: 20),
+              TextFormField(
+                validator: (value) =>
+                (value == null || value.isEmpty) ? 'Please fill Email' : null,
+                controller: _controllerEmail,
+                keyboardType: TextInputType.emailAddress,
                 decoration: const InputDecoration(
-                    labelText: 'Confirm Password'),
+                  labelText: 'Email',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              const SizedBox(height: 20),
+              TextFormField(
+                validator: (value) =>
+                (value == null || value.isEmpty) ? 'Please fill Password' : null,
+                controller: _controllerPass,
                 obscureText: true,
+                decoration: const InputDecoration(
+                  labelText: 'Password',
+                  border: OutlineInputBorder(),
+                ),
               ),
               SizedBox(height: 20),
               ElevatedButton(
@@ -74,11 +78,7 @@ class _SignUpCardState extends State<SignUpCard> {
                     );
                   }
                 },
-                child: _loading
-                    ? const CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                )
-                    : const Text('Sign Up'),
+                child: Text('Log in'),
               ),
             ],
           ),
