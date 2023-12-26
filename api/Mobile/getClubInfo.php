@@ -14,7 +14,7 @@ if ($data !== null) {
         die("access denied");
     }
 }
-$query = "SELECT Clubs.Name, Clubs.Logo,Clubs.Description,Clubs.ManagerID,Clubs.DateCreated
+$query = "SELECT Clubs.Name, Clubs.Logo,Clubs.Description,Clubs.ManagerID,Clubs.
           FROM Clubs 
           WHERE Clubs.ID ='" . $clubId . "'";
 

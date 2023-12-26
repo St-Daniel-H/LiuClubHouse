@@ -91,7 +91,7 @@ class _ClubCardState extends State<ClubCard> {
             child: Image.network(
               "https://liuclubhouse.000webhostapp.com/${widget.p.Logo}",
               width: double.infinity,
-              height: 100,
+              height: 200,
               fit: BoxFit.cover,
             ),
           ),
