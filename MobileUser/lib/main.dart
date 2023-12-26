@@ -143,6 +143,8 @@ class _LoginPageState extends State<LoginPage> {
                   const SizedBox(height: 10),
                   ElevatedButton(
                     onPressed: () {
+                      Navigator.pushNamed(context, '/signup');
+
                     },
                     style: ButtonStyle(
                       minimumSize: MaterialStateProperty.all(const Size(150, 50)),

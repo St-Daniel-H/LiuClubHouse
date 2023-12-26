@@ -60,11 +60,16 @@ class _ClubProfileState extends State<ClubProfile> {
       loading = false;
     }
   }
-  bool _load = false;
+  bool load = false;
+  void changeLoad(bool success) {
+    setState(() {
+      load = success; // show product list
+    });
+  }
   //for Messages
   void update(bool success) {
     setState(() {
-      _load = true; // show product list
+      load = true; // show product list
       if (!success) { // API request failed
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('failed to load data')));
       }
@@ -157,12 +162,12 @@ class _ClubProfileState extends State<ClubProfile> {
                           ],
                         ),
                       ),
-                      _load
+                      load
                           ? Container(
                         constraints: BoxConstraints(
                           maxWidth: 700,
                         ),
-                        child: ShowMessages(),
+                        child: ShowMessages(update: update,changeLoad: changeLoad, clubId: widget.clubID.toString()),
                       )
                           : const Center(
                         child: SizedBox(
@@ -218,7 +223,7 @@ class _ClubProfileState extends State<ClubProfile> {
               setState(() {
                 if (_formKey.currentState!.validate()) {
                   setState(() {
-                    loading = true;
+                    load = false;
                   });
                   sendMessage(userId,clubId,_controllerContent.text.toString(),update);
                   getMessages(update, clubId);
