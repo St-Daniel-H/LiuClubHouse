@@ -14,10 +14,9 @@ if ($data !== null) {
         die("access denied");
     }
 }
-$query = "SELECT Messages.Content, Messages.Date, Users.Name,Users.ID,Users.Picture
-          FROM Messages 
-          INNER JOIN Users on Messages.SenderId = Users.ID
-          WHERE Messages.ClubID = '" . $clubId . "'";
+$query = "SELECT Clubs.Name, Clubs.Logo,Clubs.Description,Clubs.ManagerID,Clubs.
+          FROM Clubs 
+          WHERE Clubs.ID ='" . $clubId . "'";
 
 
 if ($result = mysqli_query($con, $query)) {

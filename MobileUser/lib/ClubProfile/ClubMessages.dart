@@ -1,6 +1,7 @@
 import 'dart:convert' as convert;
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'Validate/CheckUser.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 const String _baseURL = 'liuclubhouse.000webhostapp.com';
 
@@ -10,7 +11,8 @@ class Message{
   String DateCreated;
   String Content;
   String userId;
-  Message({required this.Name,required this.Picture,required this.DateCreated,required this.userId,required this.Content});
+  String MessageId;
+  Message({required this.Name,required this.Picture,required this.DateCreated,required this.userId,required this.Content, required this.MessageId});
 }
 List<Message> messages = [];
 Future<void> getMessages(Function(bool success) update,String clubId) async {
@@ -36,7 +38,9 @@ Future<void> getMessages(Function(bool success) update,String clubId) async {
               Picture: row['Picture'],
               DateCreated: row['Date'],
               userId: row['ID'],
-              Content: row['Content']
+              Content: row['Content'],
+              MessageId: row['MessageId']
+
           );
           messages.add(p); // add the product object to the _products list
         }
@@ -51,14 +55,29 @@ Future<void> getMessages(Function(bool success) update,String clubId) async {
   }
 }
 class ClubMessageCard extends StatefulWidget {
-  const ClubMessageCard({Key? key, required this.m}) : super(key: key);
+  const ClubMessageCard({Key? key,required this.changeLoad, required this.m,required this.clubId, required this.update}) : super(key: key);
   final Message m;
+  final String clubId;
+  final void Function(bool) changeLoad;
+  final void Function(bool) update;
   @override
   State<ClubMessageCard> createState() => _ClubMessagesState();
 }
 
 class _ClubMessagesState extends State<ClubMessageCard> {
+  bool canDelete = false;
 
+  @override
+  void initState() {
+    super.initState();
+    initializeCanDelete();
+  }
+
+  Future<void> initializeCanDelete() async {
+    canDelete = await canDeleteMessage(widget.m.userId, widget.clubId);
+    // Call setState to rebuild the widget with the updated state
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +108,18 @@ class _ClubMessagesState extends State<ClubMessageCard> {
               SizedBox(width: 20,),
               Text(widget.m.Name),
               Spacer(),
-              Text(widget.m.DateCreated)
+              Text(widget.m.DateCreated),
+              canDelete
+                  ? IconButton(
+                icon: Icon(Icons.delete),
+                onPressed: () {
+                  widget.changeLoad(false);
+                  DeleteMessage(widget.m.userId,widget.m.MessageId);
+                  getMessages(widget.update, widget.clubId);
+                  setState(() {});
+                },
+              )
+                  : SizedBox(),
             ],
           ),
           SizedBox(height: 20,),
@@ -106,8 +136,10 @@ class _ClubMessagesState extends State<ClubMessageCard> {
   }
 }
 class ShowMessages extends StatelessWidget {
-  const ShowMessages({Key? key}) : super(key: key);
-
+  const ShowMessages({Key? key,required this.clubId,required this.changeLoad, required this.update}) : super(key: key);
+  final String clubId;
+  final void Function(bool) update;
+  final void Function(bool) changeLoad;
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -120,7 +152,7 @@ class ShowMessages extends StatelessWidget {
           children: [
             SizedBox(height: 10),
             Container(
-              child: ClubMessageCard(m: messages[index]),
+              child: ClubMessageCard(changeLoad: changeLoad,update: update, m: messages[index],clubId: clubId,),
             ),
           ],
         ),
@@ -131,7 +163,6 @@ class ShowMessages extends StatelessWidget {
 
 Future<void> sendMessage(String userId,String clubId,String content,Function(bool) update) async {
   try {
-    print(content);
     final url = Uri.https(_baseURL, 'api/Mobile/sendMessage.php');
     if (clubId != null) {
       final response = await http.post(url,
@@ -150,5 +181,25 @@ Future<void> sendMessage(String userId,String clubId,String content,Function(boo
   catch(e) {
     print(e);
     update(false); // inform through callback that we failed to get data
+  }
+}
+Future<void> DeleteMessage(String userId,String messageId) async {
+  try {
+    final url = Uri.https(_baseURL, 'api/Mobile/deleteMessage.php');
+    if (messageId != null) {
+      final response = await http.post(url,
+          headers: <String, String>{
+            'content-type': 'application/json; charset=UTF-8'
+          },
+          body: convert.jsonEncode(<String, String>{
+            'MessageId': messageId,
+            'UserId': userId,
+            'Key': 'your_key'
+          })
+      ).timeout(const Duration(seconds: 20)); // max timeout 5 seconds
+    }
+  }
+  catch(e) {
+    print(e);
   }
 }
