@@ -2,6 +2,8 @@ import 'dart:convert' as convert;
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'Validate/CheckUser.dart';
+import 'Validate/CheckUser.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 const String _baseURL = 'liuclubhouse.000webhostapp.com';
 
@@ -61,10 +63,36 @@ Future<void> updateEvents(Function(bool success) update,String clubId) async {
     update(false); // inform through callback that we failed to get data
   }
 }
+Future<void> DeleteEvent(Function(bool) update, String userId,String eventId,String clubId) async {
+  try {
+    final url = Uri.https(_baseURL, 'api/Mobile/ManageAPI/deleteEvent.php');
+    if (eventId != null) {
+      final response = await http.post(url,
+          headers: <String, String>{
+            'content-type': 'application/json; charset=UTF-8'
+          },
+          body: convert.jsonEncode(<String, String>{
+            'EventId': eventId,
+            'ClubId': clubId,
+            'UserId': userId,
+            'Key': 'your_key'
+          })
+      ).timeout(const Duration(seconds: 20)); // max timeout 5 seconds
+    }
+    updateEvents(update,clubId);
+
+  }
+  catch(e) {
+    print(e);
+  }
+}
 class ClubEventCard extends StatefulWidget {
-  const ClubEventCard({Key? key, required this.e,required this.clubId}) : super(key: key);
+  const ClubEventCard({Key? key, required this.e,required this.clubId, required this.ManagerId, required this.update, this.changeLoad}) : super(key: key);
   final Event e;
   final String clubId;
+  final String ManagerId;
+  final changeLoad;
+  final update;
   @override
   State<ClubEventCard> createState() => _ClubEventCardsState();
 }
@@ -79,9 +107,11 @@ class _ClubEventCardsState extends State<ClubEventCard> {
   }
 
   Future<void> initializeCanDelete() async {
-    canDelete = await isOwner(widget.clubId);
-    // Call setState to rebuild the widget with the updated state
-    setState(() {});
+    bool x = await isOwner(widget.ManagerId);
+    setState(() {
+      canDelete = x;
+    });
+    print(canDelete);
   }
 
   @override
@@ -116,14 +146,15 @@ class _ClubEventCardsState extends State<ClubEventCard> {
                   Text("Posted at: "+ widget.e.DateCreated),
                   Text("Starts at: "+widget.e.StartDate),
                   ]),
-                  canDelete
-                      ? IconButton(
-                    icon: Icon(Icons.delete),
-                    onPressed: () {
-                      setState(() {});
-                    },
-                  )
-                      : SizedBox(),
+              canDelete
+                  ? IconButton(
+                icon: Icon(Icons.delete),
+                onPressed: () {
+                    widget.changeLoad(false);
+                  DeleteEvent(widget.update, widget.e.userId,widget.e.eventId,widget.e.ClubID);
+                  setState(() {});
+                },
+              ):SizedBox()
             ],
           ),
           SizedBox(height: 20,),
@@ -140,8 +171,10 @@ class _ClubEventCardsState extends State<ClubEventCard> {
   }
 }
 class ShowEvents extends StatelessWidget {
-  const ShowEvents({Key? key,required this.clubId, required this.update}) : super(key: key);
+  const ShowEvents({Key? key,required this.clubId, required this.update, required this.managerId,required this.changeLoad}) : super(key: key);
   final String clubId;
+  final String managerId;
+  final changeLoad;
   final update;
   @override
   Widget build(BuildContext context) {
@@ -155,7 +188,7 @@ class ShowEvents extends StatelessWidget {
             children: [
               SizedBox(height: 10),
               Container(
-                child: ClubEventCard(e: events[index],clubId: clubId,),
+                child: ClubEventCard(e: events[index],clubId: clubId,ManagerId: managerId,update: update,changeLoad: changeLoad),
               ),
             ],
           ),
@@ -165,8 +198,9 @@ class ShowEvents extends StatelessWidget {
 }
 
 class ClubEvents extends StatefulWidget {
-  const ClubEvents({Key? key, required this.clubId}) : super(key: key);
+  const ClubEvents({Key? key, required this.clubId, required this.managerId}) : super(key: key);
   final String clubId;
+  final String managerId;
   @override
   State<ClubEvents> createState() => _ClubEventsState();
 }
@@ -188,7 +222,9 @@ class _ClubEventsState extends State<ClubEvents> {
     super.initState();
     updateEvents(update,widget.clubId);
   }
-
+ void changeLoad(bool x){
+    load = x;
+ }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -199,7 +235,7 @@ class _ClubEventsState extends State<ClubEvents> {
           constraints: BoxConstraints(
             maxWidth: 700,
           ),
-          child: ShowEvents(update: update, clubId: widget.clubId.toString(),
+          child: ShowEvents(update: update, clubId: widget.clubId.toString(),managerId: widget.managerId,changeLoad:changeLoad
           ) ,
         ),
       ): const Center(
