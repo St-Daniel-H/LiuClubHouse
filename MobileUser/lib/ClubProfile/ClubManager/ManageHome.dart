@@ -4,19 +4,25 @@ import 'ManageMembers.dart';
 import 'ManageProfile.dart';
 
 class ManageHome extends StatefulWidget {
-  const ManageHome({Key? key}) : super(key: key);
-
+  const ManageHome({Key? key, required this.clubId}) : super(key: key);
+  final String clubId;
   @override
   State<ManageHome> createState() => _ManageHomeState();
 }
 
 class _ManageHomeState extends State<ManageHome> {
   int _selectedIndex = 0;
-  static const List<Widget> manageOption = <Widget>[
-    ClubProfileManager(),
-    EventManager(),
-    MemberManager(),
-  ];
+  List<Widget> manageOption = <Widget>[];
+  @override
+  void initState() {
+    super.initState();
+    // Initialize manageOption in initState where widget is accessible
+    manageOption = [
+      ClubProfileManager(clubId: widget.clubId),
+      EventManager(),
+      MemberManager(),
+    ];
+  }
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -26,7 +32,7 @@ class _ManageHomeState extends State<ManageHome> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Responsive Sidebar Example'),
+        title: Text('Liu Club House'),
       ),
       body: Center(
         child: manageOption[_selectedIndex],
