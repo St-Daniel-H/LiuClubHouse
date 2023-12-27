@@ -13,6 +13,6 @@ Future<bool> isOwner(String managerId) async {
   var userId =(prefs.getString('userId'))!;
   return userId == managerId;
 }
-Future<bool> canDeleteMessage(senderId,clubId) async {
-  return await isSender(senderId) || await isOwner(clubId);
+Future<bool> canDeleteMessage(String senderId,String managerId) async {
+  return await isSender(senderId) || await isOwner(managerId);
 }
