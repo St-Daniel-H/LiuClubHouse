@@ -151,94 +151,96 @@ setState(() {
   }
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-            padding: EdgeInsets.all(10),
-            width: double.infinity,
-            height: 300,
-            constraints: BoxConstraints(
-              maxWidth: 700, // Set the maximum width
-            ),
-          child:Image.network(imageUrl,
-            width: double.infinity, // Make the image take the full available width
-            height: 300, // Set the fixed height
-            fit: BoxFit.cover, )
+    return SingleChildScrollView(
+      child:Column(
+        children: [
+          Container(
+              padding: EdgeInsets.all(10),
+              width: double.infinity,
+              height: 300,
+              constraints: BoxConstraints(
+                maxWidth: 700, // Set the maximum width
+              ),
+              child:Image.network(imageUrl,
+                width: double.infinity, // Make the image take the full available width
+                height: 300, // Set the fixed height
+                fit: BoxFit.cover, )
 
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              !load ? "$Name" : "Loading",
-              style: TextStyle(fontWeight: FontWeight.bold,fontSize:20.0),
-            ),
-            Text(
-              "Created at: $CreatedAt",
-              style: TextStyle(fontStyle: FontStyle.italic),
-            ),
-          ],
-        ),
-        Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          const SizedBox(height: 20),
-                          TextFormField(
-                            validator: (value) =>
-                            (value == null || value.isEmpty) ? 'Please fill Name' : null,
-                            controller: _controllerName,
-                            keyboardType: TextInputType.text,
-                            decoration: const InputDecoration(
-                              labelText: 'Name',
-                              border: OutlineInputBorder(),
-                            ),
-                          ),
-                          const SizedBox(height: 20),
-                          TextFormField(
-                            maxLines: 3, // Set the maximum number of lines
-                            minLines: 3,
-                            validator: (value) =>
-                            (value == null || value.isEmpty) ? 'Please fill Description' : null,
-                            controller: _controllerDescription,
-                            keyboardType: TextInputType.emailAddress,
-                            decoration: const InputDecoration(
-                              labelText: 'Description',
-                              border: OutlineInputBorder(),
-                            ),
-                          ),
-                          const SizedBox(height: 20),
-                          ElevatedButton(
-                            onPressed: _pickFile,
-                            style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
-                            ),
-                            child: Text('Change Image'),
-                          ),
-                          const SizedBox(height: 20),
-                          ElevatedButton(
-                            onPressed: (){
-                              updateClubInfo();
-                            },
-                            style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
-                            ),
-                            child: Text('Submit Changes'),
-                          ),
-                        ],
-                      ),
-                    ),
+              Text(
+                !load ? "$Name" : "Loading",
+                style: TextStyle(fontWeight: FontWeight.bold,fontSize:20.0),
+              ),
+              Text(
+                "Created at: $CreatedAt",
+                style: TextStyle(fontStyle: FontStyle.italic),
+              ),
             ],
           ),
-        )
-      ],
+          Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      const SizedBox(height: 20),
+                      TextFormField(
+                        validator: (value) =>
+                        (value == null || value.isEmpty) ? 'Please fill Name' : null,
+                        controller: _controllerName,
+                        keyboardType: TextInputType.text,
+                        decoration: const InputDecoration(
+                          labelText: 'Name',
+                          border: OutlineInputBorder(),
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      TextFormField(
+                        maxLines: 3, // Set the maximum number of lines
+                        minLines: 3,
+                        validator: (value) =>
+                        (value == null || value.isEmpty) ? 'Please fill Description' : null,
+                        controller: _controllerDescription,
+                        keyboardType: TextInputType.emailAddress,
+                        decoration: const InputDecoration(
+                          labelText: 'Description',
+                          border: OutlineInputBorder(),
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      ElevatedButton(
+                        onPressed: _pickFile,
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+                        ),
+                        child: Text('Change Image'),
+                      ),
+                      const SizedBox(height: 20),
+                      ElevatedButton(
+                        onPressed: (){
+                          updateClubInfo();
+                        },
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+                        ),
+                        child: Text('Submit Changes'),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          )
+        ],
+      ) ,
     );
   }
 }

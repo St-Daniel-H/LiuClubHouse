@@ -19,7 +19,7 @@ class _ManageHomeState extends State<ManageHome> {
     // Initialize manageOption in initState where widget is accessible
     manageOption = [
       ClubProfileManager(clubId: widget.clubId),
-      EventManager(),
+      EventManager(clubId: widget.clubId),
       MemberManager(),
     ];
   }
@@ -46,7 +46,7 @@ class _ManageHomeState extends State<ManageHome> {
               decoration: BoxDecoration(
                 color: Colors.blue,
               ),
-              child: Text('Drawer Header'),
+              child: Text('Manage Your Club'),
             ),
             ListTile(
               title: const Text('Profile'),

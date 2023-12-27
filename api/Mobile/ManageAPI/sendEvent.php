@@ -16,6 +16,8 @@ $StartDate = "";
 if ($data !== null) {
     $clubId = addslashes(strip_tags($data['ClubId']));
     $userId = addslashes(strip_tags($data['UserId']));
+    $Title = addslashes(strip_tags($data['Title']));
+    $Description = addslashes(strip_tags($data['Description']));
     $key = addslashes(strip_tags($data['Key']));
 
     if ($key != "your_key" or trim($clubId) == "" or trim($userId) == "") {

@@ -71,7 +71,7 @@ class _ClubProfileHomeState extends State<ClubProfileHome> {
           body: TabBarView(
             children: [
               ClubProfile(managerId: widget.managerId, clubID:widget.clubId),
-              ClubEvents(clubId: widget.clubId.toString()),
+              ClubEvents(clubId: widget.clubId.toString(),managerId: widget.managerId.toString(),),
               ClubMembers(clubId: widget.clubId.toString()),
             ],
           ),
