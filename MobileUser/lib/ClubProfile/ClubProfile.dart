@@ -6,8 +6,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 const baseURL = 'liuclubhouse.000webhostapp.com';
 
 class ClubProfile extends StatefulWidget {
-  const ClubProfile({Key? key, required this.clubID}) : super(key: key);
+  const ClubProfile({Key? key, required this.clubID, required this.managerId}) : super(key: key);
   final int clubID;
+  final int managerId;
   @override
   State<ClubProfile> createState() => _ClubProfileState();
 }
@@ -165,7 +166,7 @@ class _ClubProfileState extends State<ClubProfile> {
                         constraints: BoxConstraints(
                           maxWidth: 700,
                         ),
-                        child: ShowMessages(update: update,changeLoad: changeLoad, clubId: widget.clubID.toString()),
+                        child: ShowMessages(managerId:widget.managerId ,update: update,changeLoad: changeLoad, clubId: widget.clubID.toString()),
                       )
                           : const Center(
                         child: SizedBox(

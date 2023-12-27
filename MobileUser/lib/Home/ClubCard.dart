@@ -117,7 +117,7 @@ class _ClubCardState extends State<ClubCard> {
           ElevatedButton(onPressed: (){
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => ClubProfileHome(clubId: widget.p.ID)),
+              MaterialPageRoute(builder: (context) => ClubProfileHome(clubId: widget.p.ID,managerId:widget.p.ManagerID)),
             );
           }, child: Text("Visit"),style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),

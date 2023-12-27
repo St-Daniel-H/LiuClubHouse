@@ -55,9 +55,10 @@ Future<void> getMessages(Function(bool success) update,String clubId) async {
   }
 }
 class ClubMessageCard extends StatefulWidget {
-  const ClubMessageCard({Key? key,required this.changeLoad, required this.m,required this.clubId, required this.update}) : super(key: key);
+  const ClubMessageCard({Key? key,required this.changeLoad, required this.m,required this.clubId, required this.update, required this.managerId}) : super(key: key);
   final Message m;
   final String clubId;
+  final int managerId;
   final void Function(bool) changeLoad;
   final void Function(bool) update;
   @override
@@ -74,7 +75,8 @@ class _ClubMessagesState extends State<ClubMessageCard> {
   }
 
   Future<void> initializeCanDelete() async {
-    canDelete = await canDeleteMessage(widget.m.userId, widget.clubId);
+
+    canDelete = await canDeleteMessage(widget.m.userId ,widget.managerId.toString());
     // Call setState to rebuild the widget with the updated state
     setState(() {});
   }
@@ -136,8 +138,9 @@ class _ClubMessagesState extends State<ClubMessageCard> {
   }
 }
 class ShowMessages extends StatelessWidget {
-  const ShowMessages({Key? key,required this.clubId,required this.changeLoad, required this.update}) : super(key: key);
+  const ShowMessages({Key? key,required this.clubId,required this.changeLoad, required this.update, required this.managerId}) : super(key: key);
   final String clubId;
+  final int managerId;
   final void Function(bool) update;
   final void Function(bool) changeLoad;
   @override
@@ -152,7 +155,7 @@ class ShowMessages extends StatelessWidget {
           children: [
             SizedBox(height: 10),
             Container(
-              child: ClubMessageCard(changeLoad: changeLoad,update: update, m: messages[index],clubId: clubId,),
+              child: ClubMessageCard(changeLoad: changeLoad,managerId: managerId,update: update, m: messages[index],clubId: clubId,),
             ),
           ],
         ),

@@ -14,12 +14,13 @@ if ($data !== null) {
         die("access denied");
     }
 }
-$query = "SELECT Users.Name, Users.Picture,Users.ID
-          FROM Users 
-          WHERE Users.ID = (SELECT UserID FROM UserClub WHERE ClubID = '" . $clubId . "')";
+$sql = "SELECT Users.Name, Users.Picture, Users.ID, UserClub.DateJoined
+        FROM Users 
+        JOIN UserClub ON Users.ID = UserClub.UserID
+        WHERE UserClub.ClubID = '" . $clubId . "'";
 
 
-if ($result = mysqli_query($con, $query)) {
+if ($result = mysqli_query($con, $sql)) {
     $emparray = array();
     while ($row = mysqli_fetch_assoc($result))
         $emparray[] = $row;
