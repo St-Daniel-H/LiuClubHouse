@@ -10,7 +10,7 @@ $userToAddId = "";
 if ($data !== null) {
     $clubId = addslashes(strip_tags($data['ClubId']));
     $userId = addslashes(strip_tags($data['UserId']));
-    $userToAddId = addslashes(strip_tags($data['UserToAddId']));
+    $userToAddId = addslashes(strip_tags($data['email']));
     $key = addslashes(strip_tags($data['Key']));
 
     if ($key != "your_key" or trim($clubId) == "" or trim($userId) == "") {
@@ -21,35 +21,48 @@ if ($data !== null) {
 $checkIfUserInClub = "SELECT * FROM Clubs WHERE ManagerID = " . $userId . " AND ID = " . $clubId;
 $check = mysqli_query($con, $checkIfUserInClub);
 
-$checkIfUserExist = "SELECT * FROM Users WHERE ID = " . $userToAddId;
+$getUserIdQuery = "SELECT ID FROM Users WHERE Email = ?";
+$getUserIdStmt = mysqli_prepare($con, $getUserIdQuery);
+mysqli_stmt_bind_param($getUserIdStmt, "s", $userToAddId);
+mysqli_stmt_execute($getUserIdStmt);
+$resultUserId = mysqli_stmt_get_result($getUserIdStmt);
+
+$checkIfUserExist = "SELECT * FROM Users WHERE Email = '" . $userToAddId . "'";
 $checkUserExist = mysqli_query($con, $checkIfUserExist);
 
-$checkIfUserAlreadyInClub = "SELECT * FROM UserClub WHERE UserID = " . $userToAddId . " AND ClubID = " . $clubId;
-$checkUserAlreadyJoined = mysqli_query($con, $checkIfUserExist);
+$checkIfUserAlreadyInClub = "SELECT * FROM UserClub WHERE 
+UserId = (SELECT ID FROM Users WHERE Email = '" . $userToAddId . "') 
+AND ClubID = " . $clubId;
+$checkUserAlreadyJoined = mysqli_query($con, $checkIfUserAlreadyInClub);
+
 if (mysqli_num_rows($check) > 0) {
+    if ($rowUserId = mysqli_fetch_assoc($resultUserId)) {
+        $userId = $rowUserId['ID'];
+        if (mysqli_num_rows($checkUserAlreadyJoined) > 0) {
+            http_response_code(403);
+            echo ("User already joined");
+            return;
+        }
+        $query = "INSERT INTO UserClub (UserID, ClubID, DateJoined) VALUES (?, ?, NOW())";
+        $insertStmt = mysqli_prepare($con, $query);
+        mysqli_stmt_bind_param($insertStmt, "is", $userId, $clubId);
+        mysqli_stmt_execute($insertStmt);
 
-    if (mysqli_num_rows($checkUserExist) == 0) {
-        http_response_code(403);
-        die("User does not exist");
-        return;
-    }
-    if (mysqli_num_rows($checkUserAlreadyJoined) > 0) {
-        http_response_code(403);
-        die("User already joined");
-        return;
-    }
-    $query = "INSERT INTO UserClub (UserID, ClubID, DateJoined) VALUES ('" . $userToAddId . "', '" . $clubId . "', NOW())";
-    $insertResult = mysqli_query($con, $query);
-    if ($insertResult) {
-        // Insertion was successful
-        echo json_encode(array('success' => true));
+        if (mysqli_stmt_affected_rows($insertStmt) > 0) {
+            // Insertion was successful
+            echo json_encode(array('success' => true));
+        } else {
+            // Insertion failed
+            echo json_encode(array('success' => false, 'error' => mysqli_error($con)));
+        }
+
+        mysqli_close($con);
     } else {
-        // Insertion failed
-        echo json_encode(array('success' => false, 'error' => mysqli_error($con)));
+        http_response_code(403);
+        echo ("User does not exist");
+        return;
     }
-
-    mysqli_close($con);
 } else {
     http_response_code(403);
-    die("Access Denied");
+    echo "Access Denied";
 }
