@@ -39,6 +39,7 @@ dependencies:
   encrypted_shared_preferences: ^3.0.1
   shared_preferences: ^2.2.2
   file_picker: ^6.1.1
+  font_awesome_flutter: ^10.6.0
 
 dev_dependencies:
   flutter_test:

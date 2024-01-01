@@ -20,7 +20,7 @@ class _ManageHomeState extends State<ManageHome> {
     manageOption = [
       ClubProfileManager(clubId: widget.clubId),
       EventManager(clubId: widget.clubId),
-      MemberManager(),
+      MemberManager(clubId: widget.clubId),
     ];
   }
   void _onItemTapped(int index) {
