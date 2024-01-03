@@ -54,7 +54,7 @@ class _ClubProfileHomeState extends State<ClubProfileHome> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => ManageHome(clubId: widget.clubId.toString(),)),
+                      MaterialPageRoute(builder: (context) => ManageHome(clubId: widget.clubId.toString(),userId:userId.toString(),)),
                     );
                   },
                 ) :  SizedBox(),
