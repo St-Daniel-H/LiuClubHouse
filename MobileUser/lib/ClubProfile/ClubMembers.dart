@@ -70,7 +70,6 @@ class _ShowMembersState extends State<ShowMembers> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        //search field
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: TextField(
@@ -90,7 +89,6 @@ class _ShowMembersState extends State<ShowMembers> {
             ),
           ),
         ),
-        //
         DataTable(
           columns: const [
             DataColumn(label: Text('Picture')),
@@ -99,25 +97,27 @@ class _ShowMembersState extends State<ShowMembers> {
           ],
           rows: filteredItems.map((member) {
             return DataRow(
+              color: MaterialStateColor.resolveWith((states) => Colors.blue),
               cells: [
-                DataCell(ClipOval(
-                  child: ClipOval(
-                    child:Image.network("https://liuclubhouse.000webhostapp.com/${member.Picture}",
+                DataCell(
+                  ClipOval(
+                    child: Image.network(
+                      "https://liuclubhouse.000webhostapp.com/${member.Picture}",
                       height: 32,
                       width: 32,
                       fit: BoxFit.cover,
                     ),
-
                   ),
-                )),
+                ),
                 DataCell(Text(member.Name)),
                 DataCell(Text("Joined at: ${member.JoinedAt}")),
               ],
             );
           }).toList(),
-        )
+        ),
       ],
     );
+
   }
 }
 

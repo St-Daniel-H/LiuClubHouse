@@ -45,7 +45,7 @@ class _ClubProfileHomeState extends State<ClubProfileHome> {
         length: 3,
         child: Scaffold(
           appBar: AppBar(
-            title: Text('Liu Club house'),
+            title: Text('LIU Club House'),
             actions: [
               canPerformAction ?//only admin can see this
                 IconButton(
@@ -67,7 +67,7 @@ class _ClubProfileHomeState extends State<ClubProfileHome> {
                 Tab(text: 'Members'),
               ],
             ),
-          ),
+          ),backgroundColor: Colors.amber,
           body: TabBarView(
             children: [
               ClubProfile(managerId: widget.managerId, clubID:widget.clubId),

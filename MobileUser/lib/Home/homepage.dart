@@ -40,7 +40,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Liu Club House"),
+        title: Text("LIU Club House"),
       ),
       body: _load ? const ShowClubs() : const Center(
     child: SizedBox(width: 100, height: 100, child: CircularProgressIndicator())
