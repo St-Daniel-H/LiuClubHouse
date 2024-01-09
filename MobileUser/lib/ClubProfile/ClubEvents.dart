@@ -133,6 +133,7 @@ class _ClubEventCardsState extends State<ClubEventCard> {
             offset: Offset(0, 3),
           ),
         ],
+        color: Colors.blue,
       ),
       child: Column(
         children: [
@@ -143,18 +144,25 @@ class _ClubEventCardsState extends State<ClubEventCard> {
               Spacer(),
               Column(
                 children: [
-                  Text("Posted at: "+ widget.e.DateCreated),
-                  Text("Starts at: "+widget.e.StartDate),
-                  ]),
+                  Text("Posted at: " + widget.e.DateCreated),
+                  Text("Starts at: " + widget.e.StartDate),
+                ],
+              ),
               canDelete
                   ? IconButton(
                 icon: Icon(Icons.delete),
                 onPressed: () {
-                    widget.changeLoad(false);
-                  DeleteEvent(widget.update, widget.e.userId,widget.e.eventId,widget.e.ClubID);
+                  widget.changeLoad(false);
+                  DeleteEvent(
+                    widget.update,
+                    widget.e.userId,
+                    widget.e.eventId,
+                    widget.e.ClubID,
+                  );
                   setState(() {});
                 },
-              ):SizedBox()
+              )
+                  : SizedBox(),
             ],
           ),
           SizedBox(height: 20,),
@@ -168,6 +176,7 @@ class _ClubEventCardsState extends State<ClubEventCard> {
         ],
       ),
     );
+
   }
 }
 class ShowEvents extends StatelessWidget {

@@ -56,47 +56,6 @@ Future<void> updateMembers(Function(bool success) update,String clubId) async {
     update(false); // inform through callback that we failed to get data
   }
 }
-// class ClubMemberCard extends StatefulWidget {
-//   const ClubMemberCard({Key? key, required this.e,required this.clubId}) : super(key: key);
-//   final Members e;
-//   final String clubId;
-//   @override
-//   State<ClubMemberCard> createState() => _ClubMemberCardsState();
-// }
-//
-// class _ClubMemberCardsState extends State<ClubMemberCard> {
-//   bool canDelete = false;
-//
-//   @override
-//   void initState() {
-//     super.initState();
-//     initializeCanDelete();
-//   }
-//
-//   Future<void> initializeCanDelete() async {
-//     canDelete = await isOwner(widget.clubId);
-//     // Call setState to rebuild the widget with the updated state
-//     setState(() {});
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return DataRow(
-//       cells: [
-//         DataCell(ClipOval(
-//           child: Image.network(
-//             widget.e.Picture,
-//             height: 50,
-//             width: 50,
-//             fit: BoxFit.cover,
-//           ),
-//         )),
-//         DataCell(Text(widget.e.Name)),
-//         DataCell(Text("Joined at: ${widget.e.JoinedAt}")),
-//       ],
-//     );
-//   }
-// }
 class ShowMembers extends StatefulWidget {
   const ShowMembers({Key? key,required this.clubId, required this.update}) : super(key: key);
   final String clubId;
@@ -111,7 +70,6 @@ class _ShowMembersState extends State<ShowMembers> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        //search field
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: TextField(
@@ -131,7 +89,6 @@ class _ShowMembersState extends State<ShowMembers> {
             ),
           ),
         ),
-        //
         DataTable(
           columns: const [
             DataColumn(label: Text('Picture')),
@@ -140,37 +97,29 @@ class _ShowMembersState extends State<ShowMembers> {
           ],
           rows: filteredItems.map((member) {
             return DataRow(
+              color: MaterialStateColor.resolveWith((states) => Colors.blue),
               cells: [
-                DataCell(ClipOval(
-                  child: ClipOval(
-                    child:Image.network("https://liuclubhouse.000webhostapp.com/${member.Picture}",
+                DataCell(
+                  ClipOval(
+                    child: Image.network(
+                      "https://liuclubhouse.000webhostapp.com/${member.Picture}",
                       height: 32,
                       width: 32,
                       fit: BoxFit.cover,
                     ),
-
                   ),
-                )),
+                ),
                 DataCell(Text(member.Name)),
                 DataCell(Text("Joined at: ${member.JoinedAt}")),
               ],
             );
           }).toList(),
-        )
+        ),
       ],
     );
+
   }
 }
-//
-// class ShowMembers extends StatelessWidget {
-//   const ShowMembers({Key? key,required this.clubId, required this.update}) : super(key: key);
-//   final String clubId;
-//   final update;
-//   @override
-//   Widget build(BuildContext context) {
-//
-//   }
-// }
 
 class ClubMembers extends StatefulWidget {
   const ClubMembers({Key? key, required this.clubId}) : super(key: key);

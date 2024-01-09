@@ -197,7 +197,7 @@ class _ClubProfileState extends State<ClubProfile> {
     }
     return Container(
       padding: EdgeInsets.all(8.0),
-      color: Colors.grey[200],
+      color: Colors.grey[200], // Set the grey background color here
       child: Row(
         children: [
           Expanded(
@@ -213,8 +213,7 @@ class _ClubProfileState extends State<ClubProfile> {
                   border: OutlineInputBorder(),
                 ),
               ),
-          )
-
+            ),
           ),
           IconButton(
             icon: Icon(Icons.send),
@@ -224,16 +223,15 @@ class _ClubProfileState extends State<ClubProfile> {
                   setState(() {
                     load = false;
                   });
-                  sendMessage(userId,clubId,_controllerContent.text.toString(),update);
+                  sendMessage(userId, clubId, _controllerContent.text.toString(), update);
                   getMessages(update, clubId);
                 }
-
               });
-    //Future<void> sendMessage(String userId,String clubId,String Content,Function(bool) update) async {
             },
           ),
         ],
       ),
     );
+
   }
 }
