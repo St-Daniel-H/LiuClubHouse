@@ -43,7 +43,7 @@ class _SignUpCardState extends State<SignUpCard> {
           child: Form(
             key: _formKey,
             child:Column(
-              // mainAxisSize: MainAxisSize.min,
+              mainAxisSize: MainAxisSize.min,
               children:[
                 const SizedBox(height: 20),
                 TextFormField(

@@ -100,6 +100,7 @@ class _ClubMessagesState extends State<ClubMessageCard> {
             offset: Offset(0, 3),
           ),
         ],
+        color: Colors.blue,
       ),
       child: Column(
         children: [
@@ -135,6 +136,7 @@ class _ClubMessagesState extends State<ClubMessageCard> {
         ],
       ),
     );
+
   }
 }
 class ShowMessages extends StatelessWidget {

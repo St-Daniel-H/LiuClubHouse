@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'ManageEvents.dart';
 import 'ManageMembers.dart';
 import 'ManageProfile.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ManageHome extends StatefulWidget {
-  const ManageHome({Key? key, required this.clubId}) : super(key: key);
+  const ManageHome({Key? key, required this.clubId, required this.userId}) : super(key: key);
   final String clubId;
+  final String userId;
   @override
   State<ManageHome> createState() => _ManageHomeState();
 }
@@ -13,21 +15,26 @@ class ManageHome extends StatefulWidget {
 class _ManageHomeState extends State<ManageHome> {
   int _selectedIndex = 0;
   List<Widget> manageOption = <Widget>[];
+
   @override
   void initState() {
     super.initState();
+
     // Initialize manageOption in initState where widget is accessible
     manageOption = [
       ClubProfileManager(clubId: widget.clubId),
       EventManager(clubId: widget.clubId),
-      MemberManager(clubId: widget.clubId),
+      MemberManager(clubId: widget.clubId, userId: widget.userId,),
     ];
   }
+
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
   }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -44,7 +44,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Liu Club House"),
+        title: Text("LIU Club House"),
       ),
       body: Column(
         children: [

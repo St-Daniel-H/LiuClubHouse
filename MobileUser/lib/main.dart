@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: DefaultTabController(
+      home:DefaultTabController(
         length: 2,
         child: Scaffold(
           appBar: AppBar(
@@ -27,8 +27,49 @@ class MyApp extends StatelessWidget {
           ),
           body: TabBarView(
             children: [
-              LoginCard(),
-              SignUpCard(),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(height: 10), // Reduced SizedBox height
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      'Welcome To LIU Club House,\nPlease Enter Your Email & Password\nOr Head Over to Our Sign Up Page!',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  Expanded(
+                    child: LoginCard(),
+                  ),
+                ],
+              ),
+              // Signup Page
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(height: 10),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      'Welcome To LIU Club House,\nKindly Provide Your Information\nIn order to start your journey\nIn our Awesome Clubs!',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  Expanded(
+                    child: SignUpCard(),
+                  ),
+                ],
+              ),
             ],
           ),
         ),
