@@ -1,2 +1,0 @@
-<?php
-$actionPath = "../api/Web";

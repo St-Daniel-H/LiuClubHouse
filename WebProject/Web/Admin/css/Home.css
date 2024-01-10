@@ -1,0 +1,180 @@
+/* Dark Theme Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Include padding and border in box model */
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #1e2124; /* Dark background color */
+    color: #FFFFFF; /* Light text color */
+}
+
+#adminHome {
+    display: flex;
+    height: 100%;
+    width: 100%;
+}
+
+#left-drawer {
+    position: fixed;
+    background-color: #0054A5;
+    width: 220px;
+    height: 100vh;
+    border-right: 2px solid #01417c;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(0, 0, 0, 0.1);
+    color: #FFFFFF;
+}
+
+#lefttitle {
+    border-bottom: 2px solid #01417c;
+}
+
+#lefttitle img {
+    margin: 10px;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+}
+
+#sections {
+    width: 100%;
+}
+
+.leftDrawerOptions {
+    
+    display: flex;
+    align-items: center;
+    height: 40px;
+    width: 100%;
+    margin-top: 20px;
+    font-size: 20px;
+}
+
+ a {
+    text-decoration: none;
+    color: inherit;
+    margin: 20px;
+}
+
+.active-link {
+    background-color: #FFD700;
+    color: black;
+}
+
+.leftDrawerOptions:hover {
+    background-color: #FFD700;
+}
+
+#right-side {
+    margin-left:220px;
+    width: calc(100% - 220px);
+}
+
+#topBar {
+    color: #FFFFFF;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(0, 0, 0, 0.1);
+    background-color: #0054A5;
+    height: 50px;
+    font-size: 20px;
+    display: flex;
+    padding-left: 20px;
+    align-items: center;
+    width: 100%;
+    border-bottom: 2px solid #1e2124;
+}
+
+#main-area {
+    margin: 50px;
+}
+
+#formArea {
+    width: 400px;
+}
+#deleteButton{
+    resize: none;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #36393F;
+    border-radius: 5px;
+    color: #FFFFFF;
+    width: 48%;
+    background-color: #d40101;
+    cursor: pointer;
+    color: white;
+}
+#deleteButton:hover{
+    cursor: pointer;
+    background-color: #a50000;
+}
+form input,
+form textarea {
+    width: 100%;
+}
+
+/* Input and Textarea Styles */
+input,
+textarea {
+    resize: none;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #36393F;
+    border-radius: 5px;
+    background-color: #2C2F33; /* Dark input background color */
+    color: #FFFFFF;
+}
+
+input:focus,
+textarea:focus {
+    outline: none;
+    border-color: #7289DA;
+    box-shadow: 0 0 5px rgba(114, 137, 218, 0.5);
+}
+
+input[type="submit"],
+input[type="reset"] {
+    width: 48%;
+    display: inline-block;
+}
+
+input[type="submit"]:hover,
+input[type="reset"]:hover {
+    background-color: #0054A5;
+    cursor: pointer;
+    color: #FFD700;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th,
+td {
+    padding: 10px;
+    border: 1px solid #36393F;
+}
+
+th {
+    color: #FFFFFF;
+    background-color: #0054A5;
+}
+
+/* Alternating row colors */
+tr:nth-child(even) {
+    background-color: #2C2F33;
+    color: #FFFFFF;
+}
+
+tr:nth-child(odd) {
+    background-color: #1e2124;
+    color: #FFFFFF;
+}
+
+/* Hover effect */
+tr:hover {
+    background-color: #FFD700;
+    color: #333;
+}

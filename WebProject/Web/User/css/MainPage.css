@@ -1,0 +1,45 @@
+#backGroundContainer{
+    margin:auto;
+    padding:10px;
+    height:350px;
+    width:100%;
+    max-width:1100px;
+    margin-top:130px;
+}
+#chessClubBody{
+    margin:auto;
+}
+#chessClubRightLeftContainer{
+    margin-left:auto;
+    margin-right:auto;
+    margin-top: 50px;
+    width: 100%;
+    max-width:1100px;
+    display: flex;
+}
+#leftSide{
+    width:200px;
+    background-color:  rgb(237, 235, 235);
+    height:150px;
+    width:250px;
+    padding:20px;
+    border-radius: 25px;
+}
+#rightSide{
+    margin-left:20px;
+    width:100%;
+    padding:20px;
+}
+input[type=text]{
+    width:90%;
+}
+@media screen and (max-width:600px){
+    #leftSide{
+        display:none;
+    }
+}
+
+a, a:hover, a:focus, a:active {
+    text-decoration: none;
+    
+}

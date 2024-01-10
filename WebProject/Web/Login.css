@@ -38,7 +38,7 @@ form{
     position:relative;
     height:200px;
 }
-#email, #password{
+#Email, #Password{
     width:100%;
     color: black;
     height: 28px;

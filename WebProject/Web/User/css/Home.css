@@ -1,0 +1,54 @@
+*{
+    margin:0;
+    padding:0;
+}
+body 
+{ 
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column; 
+} 
+#indexBodyGridContainer{
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(25rem, 2fr));
+    grid-gap: 1rem;
+}
+#indexBody{
+    margin:50px;
+    margin-top:100px;
+}
+@media only screen and (max-width: 500px){
+    #indexBody{
+        margin:0;
+        margin-top:100px;
+    }
+}
+.card-text{
+    height:100px;
+}
+.card{
+    width:500px;
+    cursor: pointer;
+}
+.card img{
+    height:200px;
+    border-bottom:1px solid black;
+}
+.card:hover{
+    -webkit-box-shadow: -1px 0 9.5px 6.5px #dddddd;
+    -moz-box-shadow: -1px 0 9.5px 6.5px #dddddd;
+    box-shadow: -1px 0 9.5px 6.5px #dddddd;  
+}
+.card:hover h5{
+    text-decoration: underline;
+}
+.footer {
+
+    position:absolute bottom;
+    width: 100%;
+    background-color: gray;
+    color: white;
+    text-align: center;
+    margin:0;
+    margin-top: auto;
+  }

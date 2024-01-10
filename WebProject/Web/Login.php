@@ -8,7 +8,7 @@ session_start(); ?>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Log In</title>
-    <link rel="stylesheet" href="./css/Login.css">
+    <link rel="stylesheet" href="./Login.css">
 </head>
 
 <body>
@@ -20,13 +20,9 @@ session_start(); ?>
             <span style="color: rgb(110, 110, 110)"> Club House</span>
         </h1>
     </div>
-    <?php
-    if (isset($_SESSION["ERROR"]))
-        echo "<span style='color:red;'>" . $_SESSION["ERROR"] . "</span><br/>";
-    ?>
     <div id="formContainer">
-        <?php require_once("actionPath.php"); ?>
-        <form method="POST" action="../api/Web/LoginAction.php">
+
+        <form method="POST" action="LoginAction.php">
 
             <label for=" Email">Email*</label>
             <br>
@@ -38,14 +34,15 @@ session_start(); ?>
             <input name="Password" type="password" id="Password">
             <br>
             <br>
+            <button type="submit" id="submit">
+                <b>Log in</b>
+            </button>
             <?php
             if (isset($_SESSION["ERROR"]))
                 echo "<span style='color:red;'>" . $_SESSION["ERROR"] . "</span><br/>";
             ?>
-            <button type="submit" id="submit">
-                <b>Log in</b>
-            </button>
         </form>
+
     </div>
 </body>
 

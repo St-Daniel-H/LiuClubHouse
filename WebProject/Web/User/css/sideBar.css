@@ -1,0 +1,16 @@
+*{
+    margin:0;
+    padding:0;
+    }
+    a, a:hover, a:focus, a:active {
+        text-decoration: none;
+        color: inherit;
+    }
+    
+#activeSideBar{
+    background-color: rgba(0, 115, 255, 0.666);
+    color:white;
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+    width:100%;
+}

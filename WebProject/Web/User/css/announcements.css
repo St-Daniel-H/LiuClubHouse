@@ -1,0 +1,73 @@
+#form{
+    background-color:  rgb(237, 235, 235);
+    display: flex;
+    height:100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 25px;
+    padding:20px;
+    -webkit-box-shadow: -1px 0 9.5px 6.5px #dddddd;
+    -moz-box-shadow: -1px 0 9.5px 6.5px #dddddd;
+    box-shadow: -1px 0 9.5px 6.5px #dddddd;  
+
+}
+#form input[type=text]{
+    background-color:  rgb(237, 235, 235);
+    border:none;
+    outline-width: 0;
+    border-radius: 20px;
+    height:50px;
+}
+#form input[type=text]:hover::placeholder{
+    color: blue;
+    
+}
+
+#sendAnnouncementButton{
+    background-color:  rgb(237, 235, 235);
+    border:none;
+    width:32px;
+    height:32px;
+}
+.messageCard{
+    width:100%;
+    background-color:  rgb(237, 235, 235);
+    border-radius: 25px;
+    padding:20px;
+    margin-top:20px;
+    
+}
+.messageCardinfo{
+    display:flex;
+     position: relative;
+}
+.messageCardright{
+    margin-left:10px;
+}
+.messageCardmessage {
+    margin-left:20px;
+    font-size: 17px;
+}
+.cardImage{
+    height:50px;
+    width:50px;
+    border-radius: 50%;
+}
+#deleteButton{
+    position: absolute;
+    top:0;
+    right:0;
+    border:none;
+}
+#deleteButton:hover{
+    color:blue;
+}
+#renderContent ul {
+    padding: 0;
+
+    list-style-type: none;
+}
+.hidden{
+    display:none;
+}
